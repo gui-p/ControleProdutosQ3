@@ -1,0 +1,39 @@
+﻿@model ProdutoModel
+
+@{
+    ViewData["Title"] = "Cadastro de produtos";
+}
+
+<div>
+    <form asp-controller="Produto" asp-action="Criar" enctype="multipart/form-data" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div>
+            <label for="descricao" class="form-label">Descrição</label>
+            <input type="text" asp-for="Descricao" class="form-control" id="descricao" placeholder="Entre com a descrição do produto" />
+            <span asp-validation-for="Descricao" class="text-danger"></span>
+        </div>
+        <div>
+            <label for="codigoDeBarras" class="form-label">Código de Barras</label>
+            <input type="text" asp-for="CodigoDeBarras" class="form-control" id="codigoDeBarras" placeholder="Código de barras" />
+            <span asp-validation-for="CodigoDeBarras" class="text-danger"></span>
+        </div>
+        <div>
+            <label for="dataDeValidade" class="form-label">Data de Validade</label>
+            <input type="date" asp-for="DataDeValidade" class="form-control" id="dataDeValidade" placeholder="Entre com a data de validade" />
+            <span asp-validation-for="DataDeValidade" class="text-danger"></span>
+        </div>
+        <div>
+            <label for="quantidade" class="form-label">Quantidade</label>
+            <input type="number" asp-for="Quantidade" class="form-control" id="quantidade" placeholder="Entre com a quantidade" />
+            <span asp-validation-for="Quantidade" class="text-danger"></span>
+        </div>
+        <div>
+            <label for="valor" class="form-label">Valor unitário</label>
+            <input type="text" asp-for="Valor" class="form-control" id="valor" placeholder="R$ 0,00" />
+            <span asp-validation-for="Valor" class="text-danger"></span>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary btn-block">Adicionar</button>
+        </div>
+    </form>
+</div>

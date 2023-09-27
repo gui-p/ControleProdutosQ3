@@ -1,0 +1,53 @@
+﻿@model List<ClienteModel>
+
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<div class="text-center">
+
+    <div class="d-sm-inline-flex justify-content-between" style="column-gap: 1vh">
+        <a class="btn btn-success" role="button" asp-controller="Cliente" asp-action="Criar">
+            Adicionar novo Cliente
+        </a>
+        <a class="btn btn-success" role="button" asp-controller="Cliente" asp-action="Editar">
+            Editar um Cliente
+        </a>
+    </div>
+
+    <div>
+        <h2>Listar Clientes</h2>      
+    </div>
+
+    <table class="table caption-top">
+        <caption>Lista de Produtos</caption>
+        <thead>
+            <tr>
+                <th scope="col">Foto</th>
+                <th scope="col">Id</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Telefone</th>
+                <th scope="col">CEP</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (Model != null && Model.Any())
+            {
+                foreach (ClienteModel cliente in Model)
+                {
+
+                    <tr class="align-baseline">
+                        <td scope="col"><img src="https://media.istockphoto.com/id/1326411219/pt/foto/calico-cat-with-green-eyes-lying-on-cardboard-scratch-board.jpg?s=612x612&w=0&k=20&c=X54JSJnTWTt3pc2udoEgysbS_prAetPrX7axC9I-Pa0=" width="50px" height="50px" /></td>
+                        <th>@cliente.Id</th>
+                        <td>@cliente.Nome</td>
+                        <td>@cliente.Telefone</td>
+                        <td>@cliente.CEP</td>
+                        <td>@cliente.Status</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
