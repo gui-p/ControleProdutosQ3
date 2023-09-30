@@ -21,11 +21,13 @@ namespace ControleProdutosQ3.Models
         [RegularExpression(@"^\d{8}$", ErrorMessage = "Somente caracteres numéricos")]
         public string CEP { get; set; }
 
+        [MaybeNull] public string? NomeDaFoto { get; set; }
+
         [MaybeNull]
         public byte[]? Foto { get; set; }
 
-        [MaybeNull]
-        public int Status { get; set; } 
+        [Required(ErrorMessage = "Campo Obrigatório")]
+        public bool Ativo { get; set; } 
         
 
     }

@@ -13,6 +13,7 @@ namespace ControleProdutosQ3.Repository
 
         public void Apagar(ClienteModel cliente);
 
+        public Task<ClienteModel> BuscarPorId(long id);
 
     }
 }

@@ -1,12 +1,17 @@
 ﻿@model ProdutoModel
 
 @{
-    ViewData["Title"] = "Cadastro de produtos";
+    ViewData["Title"] = "Alterar o produto";
+
+    var dateRecebida = Model.DataDeValidade.Date;
 }
 
 <div>
-    <form asp-controller="Produto" asp-action="Criar" enctype="multipart/form-data" method="post">
+    <form asp-controller="Produto" asp-action="Alterar" enctype="multipart/form-data" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <input type="hidden" asp-for="Id" />
+
         <div>
             <label for="descricao" class="form-label">Descrição</label>
             <input type="text" asp-for="Descricao" class="form-control" id="descricao" placeholder="Entre com a descrição do produto" />
@@ -19,7 +24,7 @@
         </div>
         <div>
             <label for="dataDeValidade" class="form-label">Data de Validade</label>
-            <input type="date" asp-for="DataDeValidade" class="form-control" id="dataDeValidade" placeholder="Entre com a data de validade" />
+            <input type="date" asp-for="@dateRecebida" class="form-control" id="dataDeValidade" placeholder="@dateRecebida" name="dataAlterada" />
             <span asp-validation-for="DataDeValidade" class="text-danger"></span>
         </div>
         <div>
@@ -34,11 +39,12 @@
         </div>
         <div class="form-check">
             <input class="form-check-label" type="checkbox" id="situacao" asp-for="Ativo" />
-            <label class="form-check-label" for="situacao">Ativo</label>
+            <label class="form-check-label" for="situacao" class="form-label">Ativo</label>
         </div>
         <div>
-            <label class="form-label" for="nomeDaFoto">Foto do produto</label>
-            <input class="form-control" type="file" accept="image/png, image/jpeg" id="nomeDaFoto" placeholder="Busque a foto do produto." name="imagemCarregada" />
+            <label for="nomeDaFoto" class="form-label">Imagem do produto: </label>
+            @Html.DisplayFor(model => model.NomeDaFoto);
+            <input type="file" accept="image/png, image/jpeg" class="form-control" id="nomeDaFoto" placeholder="Busque a foto do produto." name="imagemCarregada" />
         </div>
         <div>
             <button type="submit" class="btn btn-primary btn-block">Adicionar</button>

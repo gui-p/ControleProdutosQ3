@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Clientes";
+    var imgSrc = "https://cdn-icons-png.flaticon.com/512/5360/5360776.png";
 }
 
 <div class="text-center">
@@ -9,9 +10,6 @@
     <div class="d-sm-inline-flex justify-content-between" style="column-gap: 1vh">
         <a class="btn btn-success" role="button" asp-controller="Cliente" asp-action="Criar">
             Adicionar novo Cliente
-        </a>
-        <a class="btn btn-success" role="button" asp-controller="Cliente" asp-action="Editar">
-            Editar um Cliente
         </a>
     </div>
 
@@ -28,7 +26,8 @@
                 <th scope="col">Nome</th>
                 <th scope="col">Telefone</th>
                 <th scope="col">CEP</th>
-                <th scope="col">Status</th>
+                <th scope="col">Situação</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -38,13 +37,33 @@
                 foreach (ClienteModel cliente in Model)
                 {
 
+                    string situacao = cliente.Ativo ? "Ativo" : "Inativo";
+
+                    if(cliente.Foto != null)
+                    {
+                        var base64 = Convert.ToBase64String(cliente.Foto);
+                        imgSrc = $"data:image/gif;base64,{base64}";
+                    }
+                    else
+                    {
+                        imgSrc = "https://cdn-icons-png.flaticon.com/512/5360/5360776.png";
+                    }
+
+
                     <tr class="align-baseline">
-                        <td scope="col"><img src="https://media.istockphoto.com/id/1326411219/pt/foto/calico-cat-with-green-eyes-lying-on-cardboard-scratch-board.jpg?s=612x612&w=0&k=20&c=X54JSJnTWTt3pc2udoEgysbS_prAetPrX7axC9I-Pa0=" width="50px" height="50px" /></td>
+                        <td scope="col"><img src="@imgSrc" width="50px" height="50px" /></td>
                         <th>@cliente.Id</th>
                         <td>@cliente.Nome</td>
                         <td>@cliente.Telefone</td>
                         <td>@cliente.CEP</td>
-                        <td>@cliente.Status</td>
+                        <td>@situacao</td>
+                        <td>
+                            <div class="btn-group d-flex justify-content-around justify-items-center" role="group">
+                                        <a role="button" class="mx-2" asp-controller="Cliente" asp-action="Editar" asp-route-id="@cliente.Id"><i class="fa-solid fa-pen-to-square" style="color: #008031;"></i></a>
+                                        <a role="button" class="mx-2"><i class="fa-solid fa-eye-slash" style="color: #ccb100;"></i></a>
+                                        <a role="button" class="mx-2" asp-controller="Cliente" asp-action="ApagarConfirmacao" asp-route-id="@cliente.Id"><i class="fa-solid fa-trash" style="color: #e60000;"></i></a>
+                            </div>
+                        </td>
                     </tr>
                 }
             }

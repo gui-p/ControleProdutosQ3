@@ -8,10 +8,12 @@ namespace ControleProdutosQ3.Controllers
     public class ClienteController : Controller
     {
         private readonly IClienteRepositorio _clienteRepositorio;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ClienteController(IClienteRepositorio clienteRepositorio)
+        public ClienteController(IClienteRepositorio clienteRepositorio, IWebHostEnvironment webHostEnvironment)
         {
             _clienteRepositorio = clienteRepositorio;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public async Task<IActionResult> Index()
@@ -20,36 +22,70 @@ namespace ControleProdutosQ3.Controllers
 
             return await Task.FromResult(View(clientes));
         }
-        
-        public async Task<IActionResult> Criar(ClienteModel cliente) 
-        {
-            List<ValidationResult> results = new List<ValidationResult>();
-            ValidationContext context = new ValidationContext(cliente);
 
-            bool isValid = Validator.TryValidateObject(cliente, context, results, true);
-            if(!isValid)
+        public async Task<IActionResult> Criar()
+        {
+            return await Task.FromResult(View());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Criar(ClienteModel cliente, IFormFile? imagemCarregada) 
+        {
+           
+            if(!ValidaModels.Valida<ClienteModel>(cliente))
             {
                 return await Task.FromResult(View(cliente));
             }
 
-            cliente.Status = 1;
 
+            if (imagemCarregada == null)
+            {
+                cliente.Foto = null;
+                cliente.NomeDaFoto = "";
+            }
+            else
+            {
+                cliente.Foto = Util.SalvaImagem(imagemCarregada, _webHostEnvironment.WebRootPath);
+                cliente.NomeDaFoto = imagemCarregada.FileName;
+            }
+
+            
             await _clienteRepositorio.Adicionar(cliente);
 
             return await Task.FromResult(RedirectToAction("Index"));
         }
 
-        public async Task<IActionResult> Editar(ClienteModel cliente)
+        public async Task<IActionResult> Alterar(ClienteModel cliente, IFormFile imagemCarregada)
         {
-            
-            return await Task.FromResult(View(cliente));
+
+
+            if (!ValidaModels.Valida<ClienteModel>(cliente))
+            {
+                return await Task.FromResult(View(cliente));
+            }
+
+
+            if (imagemCarregada == null)
+            {
+                cliente.Foto = null;
+                cliente.NomeDaFoto = "";
+            }
+            else
+            {
+                cliente.Foto = Util.SalvaImagem(imagemCarregada, _webHostEnvironment.WebRootPath);
+                cliente.NomeDaFoto = imagemCarregada.FileName;
+            }
+
+            await _clienteRepositorio.Editar(cliente);
+
+            return await Task.FromResult(RedirectToAction("Index"));
            
         }
 
-        public async Task<IActionResult> EditarConfirmar(ClienteModel cliente)
+        public async Task<IActionResult> Editar(long id)
         {
-            await _clienteRepositorio.Editar(cliente);
-            return await Task.FromResult(RedirectToAction("Index"));
+            ClienteModel cliente = await _clienteRepositorio.BuscarPorId(id);
+            return await Task.FromResult(View(cliente));
         }
 
     }

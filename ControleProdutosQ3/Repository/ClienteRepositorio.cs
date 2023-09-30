@@ -3,6 +3,7 @@ using ControleProdutosQ3.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Security.Authentication;
 
 namespace ControleProdutosQ3.Repository
 {
@@ -38,14 +39,33 @@ namespace ControleProdutosQ3.Repository
         public async Task<ClienteModel> Editar(ClienteModel cliente)
         {
             
-            ClienteModel clienteAlterado = _bancoContext.Cliente.First(a => a.Id == cliente.Id);
+            ClienteModel clienteAlterado = await  BuscarPorId(cliente.Id);
 
             clienteAlterado.Nome = cliente.Nome;
             clienteAlterado.CEP = cliente.CEP;
             clienteAlterado.Telefone = cliente.Telefone;
+            clienteAlterado.NomeDaFoto = cliente.NomeDaFoto;
+            clienteAlterado.Foto = cliente.Foto;
+
             await _bancoContext.SaveChangesAsync();
             return clienteAlterado;
 
+        }
+
+        public async Task<ClienteModel> BuscarPorId(long id)
+        {
+            Task<ClienteModel> clienteDB;
+
+            try
+            {
+                clienteDB = _bancoContext.Cliente.FirstOrDefaultAsync(p => p.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}, ocorreu erro na busca do produto!");
+            }
+
+            return await clienteDB;
         }
     }
 }

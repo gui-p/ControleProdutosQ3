@@ -11,9 +11,12 @@ namespace ControleProdutosQ3.Controllers
         //Injeção de dependência
         private readonly IProdutoRepositorio _produtoRepositorio;
 
-        public ProdutoController(IProdutoRepositorio produtoRepositorio)
+        private readonly IWebHostEnvironment _environment;
+
+        public ProdutoController(IProdutoRepositorio produtoRepositorio, IWebHostEnvironment environment)
         {
             _produtoRepositorio = produtoRepositorio;
+            _environment = environment;
         }
 
         public async Task<IActionResult> Index()
@@ -27,27 +30,87 @@ namespace ControleProdutosQ3.Controllers
             return await Task.FromResult(View());
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Criar(ProdutoModel produto)
+        public async Task<IActionResult> Editar(long id)
         {
-            List<ValidationResult> results = new List<ValidationResult>();
-            ValidationContext context = new ValidationContext(produto);
-            bool isValid = Validator.TryValidateObject(produto, context, results, true);
+            ProdutoModel produto = await _produtoRepositorio.BuscarPorId(id);   
+            return await Task.FromResult(View(produto));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Alterar(ProdutoModel produto, IFormFile? imagemCarregada, DateTime dataAlterada)
+        {
+
+
+            bool isValid = ValidaModels.Valida(produto);
             if (!isValid)
             {
-                foreach (ValidationResult validationResult in results)
-                {
-                    return await Task.FromResult(View(produto));
-                }
+
+                return await Task.FromResult(RedirectToAction("Editar", produto));
+
+            }
+
+            if (imagemCarregada != null)
+            {
+                produto.Foto = Util.SalvaImagem(imagemCarregada, _environment.WebRootPath);
+                produto.NomeDaFoto = Path.GetFileName(imagemCarregada!.FileName);
+            }
+            else
+            {
+                produto.Foto = null;
+                produto.NomeDaFoto = "";
             }
 
 
+            produto.DataDeValidade = dataAlterada;
+
+            await _produtoRepositorio.Atualizar(produto);
+            return await Task.FromResult(RedirectToAction("Index"));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Criar(ProdutoModel produto, IFormFile? imagemCarregada)
+        {
+            
+            bool isValid = ValidaModels.Valida(produto);
+            if (!isValid)
+            {
+                
+                return await Task.FromResult(View(produto));
+                
+            }
+
+            if (imagemCarregada != null)
+            {
+                produto.Foto = Util.SalvaImagem(imagemCarregada, _environment.WebRootPath);
+                produto.NomeDaFoto = Path.GetFileName(imagemCarregada!.FileName);
+            }
+            else
+            {
+                produto.Foto = null;
+                produto.NomeDaFoto = "";
+            }
+
             produto.DataDeRegistro = DateTime.Now;
-            produto.Ativo = true;
 
             await _produtoRepositorio.Adicionar(produto);
 
             return await Task.FromResult(RedirectToAction("Index"));
         }
+
+        public async Task<IActionResult> ApagarConfirmacao(long id)
+        {
+            ProdutoModel produto = await _produtoRepositorio.BuscarPorId(id);
+            return await Task.FromResult(View(produto));
+        }
+
+
+        [HttpDelete]
+        public async Task<IActionResult> Apagar(ProdutoModel produto)
+        {
+
+            await _produtoRepositorio.Apagar(produto);
+            return await Task.FromResult(RedirectToAction("Index"));
+        }
+
     }
 }

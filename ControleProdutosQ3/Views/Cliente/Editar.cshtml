@@ -5,7 +5,7 @@
 }
 
 <div>
-    <form asp-controller="Cliente" asp-action="EditarConfirmar" enctype="multipart/form-data" method="post">
+    <form asp-controller="Cliente" asp-action="Alterar" enctype="multipart/form-data" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div>
             <label for="id" class="form-label">ID do Cliente</label>
@@ -27,8 +27,17 @@
             <input type="text" asp-for="CEP" class="form-control" id="cep" placeholder="CEP" />
             <span asp-validation-for="CEP" class="text-danger"></span>
         </div>
+        <div class="form-check">
+            <input class="form-check-label" type="checkbox" id="situacao" asp-for="Ativo" />
+            <label class="form-check-label" for="situacao">Ativo</label>
+        </div>
         <div>
-            <button type="submit" class="btn btn-primary btn-block">Editar</button>
+            <label for="nomeDaFoto" class="form-label">Imagem do produto: </label>
+            @Html.DisplayFor(model => model.NomeDaFoto);
+            <input type="file" accept="image/png, image/jpeg" class="form-control" id="nomeDaFoto" placeholder="Busque a foto do produto." name="imagemCarregada" />
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary btn-block">Confirmar</button>
         </div>
     </form>
 </div>
