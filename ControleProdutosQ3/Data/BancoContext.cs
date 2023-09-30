@@ -14,5 +14,6 @@ namespace ControleProdutosQ3.Data
 
         public DbSet<ClienteModel> Cliente { get; set; }
 
+        public DbSet<LoginModel> Login { get; set; }   
     }
 }

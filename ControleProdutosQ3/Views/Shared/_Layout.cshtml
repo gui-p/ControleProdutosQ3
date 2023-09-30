@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using ControleProdutosQ3.Controllers;
+@{
+    var usuario = Context.Session.GetString(LoginController.SessionKeyUser);
+    var idUsuario = Context.Session.GetInt32(LoginController.SessionKeyId);
+}
+
+
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="utf-8" />
@@ -19,17 +26,43 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Produto" asp-action="Index">Produtos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Index">Clientes</a>
-                        </li>
-                    </ul>
+                    <div>
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            @if(usuario != null)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Produto" asp-action="Index">Produtos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Index">Clientes</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div>
+                        <ul class="navbar-nav flex-grow-1">
+                            @if(usuario == null)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Entrar</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Editar" asp-route-id=@idUsuario>@usuario</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Sair">Sair</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+
                 </div>
             </div>
         </nav>

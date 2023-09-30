@@ -58,7 +58,7 @@ namespace ControleProdutosQ3.Repository
 
             try
             {
-                clienteDB = _bancoContext.Cliente.FirstOrDefaultAsync(p => p.Id == id);
+				clienteDB = _bancoContext.Cliente.FirstOrDefaultAsync(p => p.Id == id);
             }
             catch (Exception ex)
             {

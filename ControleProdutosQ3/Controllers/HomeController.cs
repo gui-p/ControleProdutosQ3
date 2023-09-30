@@ -18,10 +18,17 @@ namespace ControleProdutosQ3.Controllers
             return View();
         }
 
+        public IActionResult Sair()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index");
+        }
+
         public IActionResult Privacy()
         {
             return View();
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

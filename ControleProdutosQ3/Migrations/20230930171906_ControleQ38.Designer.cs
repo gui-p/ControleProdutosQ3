@@ -4,6 +4,7 @@ using ControleProdutosQ3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControleProdutosQ3.Migrations
 {
     [DbContext(typeof(BancoContext))]
-    partial class BancoContextModelSnapshot : ModelSnapshot
+    [Migration("20230930171906_ControleQ38")]
+    partial class ControleQ38
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,8 +82,9 @@ namespace ControleProdutosQ3.Migrations
                     b.Property<bool?>("EmailConfirmado")
                         .HasColumnType("bit");
 
-                    b.Property<int>("NivelAcesso")
-                        .HasColumnType("int");
+                    b.Property<string>("NivelAcesso")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Senha")
                         .IsRequired()
