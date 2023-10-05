@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControleProdutosQ3.Migrations
 {
     [DbContext(typeof(BancoContext))]
-    [Migration("20230930180441_ControleQ310")]
-    partial class ControleQ310
+    [Migration("20231005155157_Cadastros")]
+    partial class Cadastros
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,18 +38,29 @@ namespace ControleProdutosQ3.Migrations
 
                     b.Property<string>("CEP")
                         .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
+
+                    b.Property<string>("CPF")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
                     b.Property<byte[]>("Foto")
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("NomeDaFoto")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sobrenome")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Telefone")
                         .IsRequired()
@@ -59,6 +70,41 @@ namespace ControleProdutosQ3.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cliente");
+                });
+
+            modelBuilder.Entity("ControleProdutosQ3.Models.EnderecoModel", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Bairro")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CEP")
+                        .IsRequired()
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
+
+                    b.Property<string>("Cidade")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ClienteId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Logradouro")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClienteId");
+
+                    b.ToTable("Endereco");
                 });
 
             modelBuilder.Entity("ControleProdutosQ3.Models.LoginModel", b =>
@@ -151,6 +197,20 @@ namespace ControleProdutosQ3.Migrations
                         .IsUnique();
 
                     b.ToTable("Produto");
+                });
+
+            modelBuilder.Entity("ControleProdutosQ3.Models.EnderecoModel", b =>
+                {
+                    b.HasOne("ControleProdutosQ3.Models.ClienteModel", "Cliente")
+                        .WithMany("Enderecos")
+                        .HasForeignKey("ClienteId");
+
+                    b.Navigation("Cliente");
+                });
+
+            modelBuilder.Entity("ControleProdutosQ3.Models.ClienteModel", b =>
+                {
+                    b.Navigation("Enderecos");
                 });
 #pragma warning restore 612, 618
         }

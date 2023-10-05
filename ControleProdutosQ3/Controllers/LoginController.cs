@@ -25,7 +25,7 @@ namespace ControleProdutosQ3.Controllers
 
         public async Task<IActionResult> Registro()
         {
-            return await Task.FromResult<IActionResult>(RedirectToAction("Index", "Home"));
+            return await Task.FromResult<IActionResult>(View());
         }
 
 
@@ -43,7 +43,7 @@ namespace ControleProdutosQ3.Controllers
 
             await _loginRepositorio.Adicionar(loginDB);
 
-            return await Task.FromResult(RedirectToAction("Index"));
+            return await Task.FromResult(RedirectToAction("Index", "Home"));
         }
 
         [HttpPost]

@@ -5,15 +5,15 @@ namespace ControleProdutosQ3.Repository
     public interface IClienteRepositorio
     {
 
-        public Task<List<ClienteModel>> BuscarTodos();
+        Task<List<ClienteModel>> BuscarTodos();
 
-        public Task<ClienteModel> Adicionar(ClienteModel cliente);
+        Task<ClienteModel> Adicionar(ClienteModel cliente);
 
-        public Task<ClienteModel> Editar(ClienteModel cliente);
+        Task<ClienteModel> Editar(ClienteModel cliente);
 
-        public void Apagar(ClienteModel cliente);
+        Task<bool> Apagar(ClienteModel cliente);
 
-        public Task<ClienteModel> BuscarPorId(long id);
+        Task<ClienteModel> BuscarPorId(long id);
 
     }
 }

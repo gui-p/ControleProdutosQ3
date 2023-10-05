@@ -37,10 +37,7 @@ namespace ControleProdutosQ3.Repository
 
         }
 
-        public Task<bool> AtivarDesativar(long id)
-        {
-            throw new NotImplementedException();
-        }
+
 
         public async Task<ProdutoModel> Atualizar(ProdutoModel produto)
         {

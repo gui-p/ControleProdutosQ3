@@ -42,6 +42,8 @@ builder.Services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
 
 builder.Services.AddScoped<ILoginRepositorio, LoginRepositorio>();
 
+builder.Services.AddScoped<IEnderecoRepositorio, EnderecoRepositorio>();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

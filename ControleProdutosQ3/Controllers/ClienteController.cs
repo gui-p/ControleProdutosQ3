@@ -29,7 +29,7 @@ namespace ControleProdutosQ3.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Criar(ClienteModel cliente, IFormFile? imagemCarregada) 
+        public async Task<IActionResult> Criar(ClienteModel cliente, IFormFile? imagemCarregada, string bairro, string cidade, string logradouro) 
         {
            
             if(!ValidaModels.Valida<ClienteModel>(cliente))
@@ -49,7 +49,17 @@ namespace ControleProdutosQ3.Controllers
                 cliente.NomeDaFoto = imagemCarregada.FileName;
             }
 
-            
+            cliente.Enderecos.Add(new EnderecoModel
+            {
+                Bairro = bairro,
+                Logradouro = logradouro,
+                Cidade = cidade,
+                ClienteId = cliente.Id,
+                CEP = cliente.CEP
+
+            });
+
+
             await _clienteRepositorio.Adicionar(cliente);
 
             return await Task.FromResult(RedirectToAction("Index"));
@@ -76,6 +86,9 @@ namespace ControleProdutosQ3.Controllers
                 cliente.NomeDaFoto = imagemCarregada.FileName;
             }
 
+           
+
+
             await _clienteRepositorio.Editar(cliente);
 
             return await Task.FromResult(RedirectToAction("Index"));
@@ -86,6 +99,31 @@ namespace ControleProdutosQ3.Controllers
         {
             ClienteModel cliente = await _clienteRepositorio.BuscarPorId(id);
             return await Task.FromResult(View(cliente));
+        }
+
+        public async Task<IActionResult> Atualizar(long id)
+        {
+            ClienteModel cliente = await _clienteRepositorio.BuscarPorId(id);
+            cliente.Ativo = !cliente.Ativo;
+            await _clienteRepositorio.Editar(cliente);
+            return await Task.FromResult(RedirectToAction("Index"));
+
+        }
+
+        public async Task<IActionResult> ApagarConfirmacao(long id)
+        {
+            ClienteModel cliente = await _clienteRepositorio.BuscarPorId(id);
+            return await Task.FromResult(View(cliente));
+
+        }
+
+        public async Task<IActionResult> Remover(long id)
+        {
+            ClienteModel cliente = await _clienteRepositorio.BuscarPorId(id);
+            await _clienteRepositorio.Apagar(cliente);
+
+            return await Task.FromResult(RedirectToAction("Index"));
+
         }
 
     }

@@ -104,12 +104,22 @@ namespace ControleProdutosQ3.Controllers
         }
 
 
-        [HttpDelete]
-        public async Task<IActionResult> Apagar(ProdutoModel produto)
+        public async Task<IActionResult> Remover(long id)
         {
-
+            ProdutoModel produto = await _produtoRepositorio.BuscarPorId(id);
             await _produtoRepositorio.Apagar(produto);
             return await Task.FromResult(RedirectToAction("Index"));
+        }
+
+        public async Task<IActionResult> AlterarEstado(long id)
+        {
+            ProdutoModel produto = await _produtoRepositorio.BuscarPorId(id);
+
+            produto.Ativo = !produto.Ativo;
+
+            await _produtoRepositorio.Atualizar(produto);
+            return await Task.FromResult(RedirectToAction("Index"));
+
         }
 
     }

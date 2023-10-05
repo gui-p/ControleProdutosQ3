@@ -24,8 +24,10 @@
                 <th scope="col">Foto</th>
                 <th scope="col">Id</th>
                 <th scope="col">Nome</th>
+                <th scope="col">Sobrenome</th>
+                <th scope="col">CPF</th>
                 <th scope="col">Telefone</th>
-                <th scope="col">CEP</th>
+                <th scope="col">Endereços</th>
                 <th scope="col">Situação</th>
                 <th scope="col"></th>
             </tr>
@@ -54,14 +56,18 @@
                         <td scope="col"><img src="@imgSrc" width="50px" height="50px" /></td>
                         <th>@cliente.Id</th>
                         <td>@cliente.Nome</td>
+                        <td>@cliente.Sobrenome</td>
+                        <td>@cliente.CPF</td>
                         <td>@cliente.Telefone</td>
-                        <td>@cliente.CEP</td>
+                        <td>
+                            <a role="button" class="mx-2" asp-controller="Endereco" asp-action="EnderecosCliente" asp-route-id="@cliente.Id"><i class="fa-solid fa-house"></i></a>
+                        </td>
                         <td>@situacao</td>
                         <td>
                             <div class="btn-group d-flex justify-content-around justify-items-center" role="group">
-                                        <a role="button" class="mx-2" asp-controller="Cliente" asp-action="Editar" asp-route-id="@cliente.Id"><i class="fa-solid fa-pen-to-square" style="color: #008031;"></i></a>
-                                        <a role="button" class="mx-2"><i class="fa-solid fa-eye-slash" style="color: #ccb100;"></i></a>
-                                        <a role="button" class="mx-2" asp-controller="Cliente" asp-action="ApagarConfirmacao" asp-route-id="@cliente.Id"><i class="fa-solid fa-trash" style="color: #e60000;"></i></a>
+                                <a role="button" class="mx-2" asp-controller="Cliente" asp-action="Editar" asp-route-id="@cliente.Id"><i class="fa-solid fa-pen-to-square" style="color: #008031;"></i></a>
+                                <a role="button" class="mx-2" asp-controller="Cliente" asp-action="Atualizar" asp-route-id="@cliente.Id"><i class="fa-solid fa-eye-slash" style="color: #ccb100;"></i></a>
+                                <a role="button" class="mx-2" asp-controller="Cliente" asp-action="ApagarConfirmacao" asp-route-id="@cliente.Id"><i class="fa-solid fa-trash" style="color: #e60000;"></i></a>
                             </div>
                         </td>
                     </tr>

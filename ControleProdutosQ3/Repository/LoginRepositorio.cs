@@ -51,6 +51,12 @@ namespace ControleProdutosQ3.Repository
             
         }
 
+        public async Task<LoginModel> ListarPorEmail(string email)
+        {
+            return await _bancoContext.Login.FirstOrDefaultAsync(x => x.Email.Equals(email));
+
+        }
+
         public async Task<LoginModel> ListarPorEmailSenha(string email, string senha)
         {
             LoginModel? login = await _bancoContext.Login.FirstOrDefaultAsync(x => x.Email.Equals(email) && x.Senha.Equals(senha));

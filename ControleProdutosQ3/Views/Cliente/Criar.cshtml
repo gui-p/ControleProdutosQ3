@@ -4,32 +4,65 @@
     ViewData["Title"] = "Cadastro de cliente";
 }
 
-<div>
+<div class="row col-10 mx-auto mt-4">
     <form asp-controller="Cliente" asp-action="Criar" enctype="multipart/form-data" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div>
-            <label for="nome" class="form-label">Nome do Cliente</label>
+
+        <div class="col-sm-4">
+            <label for="cpf" class="form-label">CPF</label>
+            <input type="text" asp-for="CPF" class="form-control" id="cpf" placeholder="CPF" />
+            <span asp-validation-for="CPF" class="text-danger"></span>
+        </div>
+
+
+        <div class="col-sm-4">
+            <label for="nome" class="form-label">Nome</label>
             <input type="text" asp-for="Nome" class="form-control" id="nome" placeholder="Nome" />
             <span asp-validation-for="Nome" class="text-danger"></span>
         </div>
-        <div>
+        <div class="col-sm-4">
+            <label for="sobrenome" class="form-label">Sobrenome</label>
+            <input type="text" asp-for="Sobrenome" class="form-control" id="sobrenome" placeholder="Sobrenome" />
+            <span asp-validation-for="Sobrenome" class="text-danger"></span>
+        </div>
+        <div class="col-sm-4">
             <label for="telefone" class="form-label">Número de Contato</label>
             <input type="text" asp-for="Telefone" class="form-control" id="telefone" placeholder="DDD + número" />
             <span asp-validation-for="Telefone" class="text-danger"></span>
         </div>
-        <div>
+        
+
+        <div class="col-sm-4">
             <label for="cep" class="form-label">CEP</label>
             <input type="text" asp-for="CEP" class="form-control" id="cep" placeholder="CEP" />
             <span asp-validation-for="CEP" class="text-danger"></span>
         </div>
+
+        <div class="col-sm-4">
+            <label class="form-label" for="logradouro">Logradouro</label>
+            <input class="form-control" type="text" id="logradouro" name="logradouro" placeholder="Digite o logradouro"/>
+        </div>
+
+        <div class="col-sm-4">
+            <label class="form-label" for="bairro">Bairro</label>
+            <input class="form-control" type="text" id="bairro" name="bairro" placeholder="Digite o bairro" />
+        </div>
+
+        <div class="col-sm-4">
+            <label class="form-label" for="cidade">Cidade</label>
+            <input class="form-control" type="text" id="cidade" name="cidade" placeholder="Digite o nome da cidade" />
+        </div>
+
+        <div class="col-sm-4">
+            <label class="form-label" for="nomeDaFoto">Foto</label>
+            <input class="form-control" type="file" accept="image/png, image/jpeg" id="nomeDaFoto"  name="imagemCarregada" />
+        </div>
+
         <div class="form-check">
             <input class="form-check-label" type="checkbox" id="situacao" asp-for="Ativo" />
             <label class="form-check-label" for="situacao">Ativo</label>
         </div>
-        <div>
-            <label class="form-label" for="nomeDaFoto">Foto</label>
-            <input class="form-control" type="file" accept="image/png, image/jpeg" id="nomeDaFoto"  name="imagemCarregada" />
-        </div>
+
         <div>
             <button type="submit" class="btn btn-primary btn-block">Adicionar</button>
         </div>

@@ -69,7 +69,7 @@
                         <td>
                             <div class="btn-group d-flex justify-content-around justify-items-center" role="group">
                                 <a role="button" class="mx-2" asp-controller="Produto" asp-action="Editar" asp-route-id="@produto.Id"><i class="fa-solid fa-pen-to-square" style="color: #008031;"></i></a>
-                                <a role="button" class="mx-2"><i class="fa-solid fa-eye-slash" style="color: #ccb100;"></i></a>
+                                <a role="button" class="mx-2" asp-controller="Produto" asp-action="AlterarEstado" asp-route-id="@produto.Id"><i class="fa-solid fa-eye-slash" style="color: #ccb100;"></i></a>
                                 <a role="button" class="mx-2" asp-controller="Produto" asp-action="ApagarConfirmacao" asp-route-id="@produto.Id"><i class="fa-solid fa-trash" style="color: #e60000;"></i></a>
                             </div>
                         </td>

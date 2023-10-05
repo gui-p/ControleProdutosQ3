@@ -15,5 +15,14 @@ namespace ControleProdutosQ3.Data
         public DbSet<ClienteModel> Cliente { get; set; }
 
         public DbSet<LoginModel> Login { get; set; }   
+
+        public DbSet<EnderecoModel> Endereco { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ClienteModel>().HasMany(e => e.Enderecos).WithOne(e => e.Cliente).HasForeignKey(e => e.ClienteId).IsRequired(false);
+
+        }
+
     }
 }

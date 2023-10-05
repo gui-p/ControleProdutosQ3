@@ -6,6 +6,7 @@
 <div class="text-center">
     <h3 class="display-4">Deseja Realmente Excluir o Produto @Model.Descricao?</h3>
 </div>
-<a class="btn btn-primary btn-block" role="button" asp-controller="Produto" asp-action="Index">Cancelar Exclusão</a>
-<a class="btn btn-danger btn-block" role="button" asp-controller="Produto" asp-action="Apagar" enctype="multipart/form-data" method="delete">Confirmar Exclusão</a>
-
+<div class="container d-flex justify-content-center">
+    <a class="btn btn-primary btn-block" role="button" asp-controller="Produto" asp-action="Index">Cancelar Exclusão</a>
+    <a class="btn btn-danger btn-block" role="button" asp-controller="Produto" asp-action="Remover" asp-route-id="@Model.Id">Confirmar Exclusão</a>
+</div>

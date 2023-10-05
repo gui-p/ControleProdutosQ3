@@ -17,9 +17,21 @@ namespace ControleProdutosQ3.Repository
             this._bancoContext = bancoContext;
         }
 
-        public void Apagar(ClienteModel cliente)
+        public async Task<bool> Apagar(ClienteModel cliente)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _bancoContext.Cliente.Remove(cliente);
+                await _bancoContext.SaveChangesAsync();
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+            return true;
+
         }
 
         public async Task<ClienteModel> Adicionar(ClienteModel cliente)
@@ -42,7 +54,6 @@ namespace ControleProdutosQ3.Repository
             ClienteModel clienteAlterado = await  BuscarPorId(cliente.Id);
 
             clienteAlterado.Nome = cliente.Nome;
-            clienteAlterado.CEP = cliente.CEP;
             clienteAlterado.Telefone = cliente.Telefone;
             clienteAlterado.NomeDaFoto = cliente.NomeDaFoto;
             clienteAlterado.Foto = cliente.Foto;
